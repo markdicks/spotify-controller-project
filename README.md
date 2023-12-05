@@ -14,6 +14,7 @@ This is a C# application designed to control Spotify playback locally based on c
 
 - .NET SDK
 - Visual Studio (optional)
+- NHttp Package
 
 ### Installation
 
