@@ -8,11 +8,23 @@ using System.Data;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Configuration;
+using NHttp;
 
 namespace spotify_controller_project
 {
     public partial class TwitchApp : Form
     {
+        private HttpServer WebServer;
+        private string CachedOwnerOfChannelAccessToken = "needaccesstoken";
+        private readonly string RedirectUrl = "http://localhost";
+        private readonly string ClientId = Properties.Settings.Default.clientid;
+        private readonly string ClientSecret = Properties.Settings.Default.clientsecret;
+        private readonly List<string> Scopes = new List<string>
+        {
+            "user:edit", "chat:read", "chat:edit", "channel:moderate", "whispers:read", "whispers:edit", "bits:read",
+            "channel:read:subscriptions", "user:read:email", "user:read:subscriptions"
+        };
+
         public TwitchApp()
         {
             InitializeComponent();
@@ -28,7 +40,7 @@ namespace spotify_controller_project
             Console.WriteLine("Connecting to twitch chat...");
             InitializeWebServer();
 
-            var authUrl = $"https://id.twitch.tv/oauth2/authorize?response_type=code&client_id={ClientId}&redirect_uri={RedirectUrl}&scope={String.Join("+",ApplicationScopedSettingAttribute)}";
+            var authUrl = $"https://id.twitch.tv/oauth2/authorize?response_type=code&client_id={ClientId}&redirect_uri={RedirectUrl}&scope={String.Join("+",Scopes)}";
             System.Diagnostics.Process.Start(authUrl);
         }
 
@@ -38,9 +50,6 @@ namespace spotify_controller_project
         }
 
 
-        private HttpServer WebServer;
-        private readonly string ClientId = Properties.Settings.Default.clientid;
-        private readonly string ClientSecret = Properties.Settings.Default.clientsecret;
         void InitializeWebServer()
         {
             // Creating server to optain OAuth key automatically
@@ -81,11 +90,11 @@ namespace spotify_controller_project
                 {"code", code},
                 {"grant type", "authorization_code"},
                 {"redirect_url", RedirectUrl}
-            }
+            };
 
             var content = new FormUrlEncodedContent(values);
             var response = await client.PostAsync("https://id.twitch.tv/oauth2/token", content);
-            response.EnsureSuccessStatusCode();         //not to sure if this will affect the code or not
+            response.EnsureSuccessStatusCode();         //not to sure if this will affect the code or not !check
             var responseString = await response.Content.ReadAsStringAsync();
             var json = JSObject.Parse(responseString);
 
