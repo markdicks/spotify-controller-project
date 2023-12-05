@@ -1,5 +1,13 @@
 using System.Net;
 using System.Runtime.InteropServices.JavaScript;
+using System.Windows.Forms;
+using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Data;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Configuration;
 
 namespace spotify_controller_project
 {
@@ -19,6 +27,9 @@ namespace spotify_controller_project
         {
             Console.WriteLine("Connecting to twitch chat...");
             InitializeWebServer();
+
+            var authUrl = $"https://id.twitch.tv/oauth2/authorize?response_type=code&client_id={ClientId}&redirect_uri={RedirectUrl}&scope={String.Join("+",ApplicationScopedSettingAttribute)}";
+            System.Diagnostics.Process.Start(authUrl);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -27,8 +38,9 @@ namespace spotify_controller_project
         }
 
 
-
         private HttpServer WebServer;
+        private readonly string ClientId = Properties.Settings.Default.clientid;
+        private readonly string ClientSecret = Properties.Settings.Default.clientsecret;
         void InitializeWebServer()
         {
             // Creating server to optain OAuth key automatically
