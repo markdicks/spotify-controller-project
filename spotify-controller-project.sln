@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spotify-controller-project", "spotify-controller-project\spotify-controller-project.csproj", "{D0AB44CF-2A21-4AF2-A922-A4504D1F15A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0AB44CF-2A21-4AF2-A922-A4504D1F15A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0AB44CF-2A21-4AF2-A922-A4504D1F15A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0AB44CF-2A21-4AF2-A922-A4504D1F15A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0AB44CF-2A21-4AF2-A922-A4504D1F15A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F0800AA-D074-4590-A2CA-075A34306EE0}
+	EndGlobalSection
+EndGlobal
