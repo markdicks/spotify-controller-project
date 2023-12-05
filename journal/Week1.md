@@ -1,5 +1,4 @@
 # Week 1 journey
-#### Days:
 1. [`Day 1`](#day-1)
 2. [`Day 2`](#day-2)
 
