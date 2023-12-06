@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Configuration;
 using NHttp;
+using Newtonsoft.Json.Linq;
 
 namespace spotify_controller_project
 {
@@ -54,17 +55,17 @@ namespace spotify_controller_project
         {
             // Creating server to optain OAuth key automatically
             // May add option to do this manually for people concerned of security
-            Webserver = HttpServer();
-            Webserver.EndPoint = new IPEndPoint(IPAddress.Loopback, 80);
+            WebServer = new HttpServer();
+            WebServer.EndPoint = new IPEndPoint(IPAddress.Loopback, 80);
 
             // Setup callback that we wanna run when req made
-            WebServer.RequestRecieved += async (s, e) =>
+            WebServer.RequestReceived += async (s, e) =>
             {
                 using (var writer = new StreamWriter(e.Response.OutputStream))
                 {
                     if (e.Request.QueryString.AllKeys.Any("code".Contains))
                     {
-                        var code = e.Request.QueryString.AllKeys["code"];
+                        var code = e.Request.QueryString["code"];
                         var ownerOfChannelAccessAndRefresh = await getAccessAndRefreshTokens(code);
                         CachedOwnerOfChannelAccessToken = ownerOfChannelAccessAndRefresh.Item1;
                         // SetNameAndIdByOauthedUser(CachedOwnerOfChannelAccessToken).Wait();
@@ -82,7 +83,7 @@ namespace spotify_controller_project
 
         async Task<Tuple<string, string>> getAccessAndRefreshTokens(string code)
         {
-            HttpClient = new HttpClient();
+            HttpClient client = new HttpClient();
             var values = new Dictionary<string, string>
             {
                 {"client_id", ClientId},
@@ -96,7 +97,7 @@ namespace spotify_controller_project
             var response = await client.PostAsync("https://id.twitch.tv/oauth2/token", content);
             response.EnsureSuccessStatusCode();         //not to sure if this will affect the code or not !check
             var responseString = await response.Content.ReadAsStringAsync();
-            var json = JSObject.Parse(responseString);
+            var json = JObject.Parse(responseString);
 
             // return refresh and access token so the access is not shortlived
             return new Tuple<string, string>(json["access_token"].ToString(), json["refresh_token"].ToString());
