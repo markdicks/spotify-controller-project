@@ -1,7 +1,7 @@
 # Week 1 journey
 1. [`Day 1`](#day-1)
 2. [`Day 2`](#day-2)
-3. [`Day 3`](#day-2)
+3. [`Day 3`](#day-3)
 
 ## Day 1
 > [!IMPORTANT]
