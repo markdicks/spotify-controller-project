@@ -53,3 +53,6 @@ Sacrifices have to be made today. I had initially planned to take day 4 off and 
 
 At the end of Day 3, I had my programme form finally pop up, the connect button ran it's code (which then later crashed) but the programme was able to build, I understood the structure of my project and it's files better, and I now know not to duplicate ```[assembly: <text>]``` with the same text accross my project.
 I am loving this project so far and the challenges it is presenting me, but dammm bro...the link isn't working??? :confused:
+
+## Day 4
+Unfortunately I got swamped with course work so I will wake up early to complete day 4's work tomorrow and continue with day 5 in the afternoon
