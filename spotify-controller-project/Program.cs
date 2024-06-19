@@ -11,8 +11,6 @@ namespace spotify_controller_project
         {
             // Load .env file into environment variables
             DotNetEnv.Env.Load();
-            MessageBox.Show($"TWITCH_REDIRECT_URI: {Environment.GetEnvironmentVariable("TWITCH_REDIRECT_URI")}");
-            Console.WriteLine($"TWITCH_CLIENT_ID: {Environment.GetEnvironmentVariable("TWITCH_CLIENT_ID")}");
 
             var app = new Application();
 
