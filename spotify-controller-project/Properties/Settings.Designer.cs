@@ -12,7 +12,7 @@ namespace spotify_controller_project.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,25 +25,37 @@ namespace spotify_controller_project.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("nvinvaeivoiae")]
-        public string clientid {
+        [global::System.Configuration.DefaultSettingValueAttribute("$TWITCH_REDIRECT_URI")]
+        public string TwitchRedirectUri {
             get {
-                return ((string)(this["clientid"]));
+                return ((string)(this["TwitchRedirectUri"]));
             }
             set {
-                this["clientid"] = value;
+                this["TwitchRedirectUri"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mkeranvanvoianvoia")]
-        public string clientsecret {
+        [global::System.Configuration.DefaultSettingValueAttribute("$TWITCH_CLIENT_ID")]
+        public string TwitchClientId {
             get {
-                return ((string)(this["clientsecret"]));
+                return ((string)(this["TwitchClientId"]));
             }
             set {
-                this["clientsecret"] = value;
+                this["TwitchClientId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AccessToken {
+            get {
+                return ((string)(this["AccessToken"]));
+            }
+            set {
+                this["AccessToken"] = value;
             }
         }
     }

@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore .env file
+# .env
+
+# Ignore user-specific settings file
+spotify_controller_project/Properties/Settings.settings

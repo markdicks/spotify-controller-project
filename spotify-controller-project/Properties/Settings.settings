@@ -2,11 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="spotify_controller_project.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="clientid" Type="System.String" Scope="User">
-      <Value Profile="(Default)">nvinvaeivoiae</Value>
+    <Setting Name="TwitchRedirectUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$TWITCH_REDIRECT_URI</Value>
     </Setting>
-    <Setting Name="clientsecret" Type="System.String" Scope="User">
-      <Value Profile="(Default)">mkeranvanvoianvoia</Value>
+    <Setting Name="TwitchClientId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$TWITCH_CLIENT_ID</Value>
+    </Setting>
+    <Setting Name="AccessToken" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

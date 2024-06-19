@@ -1,17 +1,26 @@
+using System;
+using System.Windows;
+using DotNetEnv;
+
 namespace spotify_controller_project
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
+        [STAThread] // Required attribute for WPF applications
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new TwitchApp());
+            // Load .env file into environment variables
+            DotNetEnv.Env.Load();
+            MessageBox.Show($"TWITCH_REDIRECT_URI: {Environment.GetEnvironmentVariable("TWITCH_REDIRECT_URI")}");
+            Console.WriteLine($"TWITCH_CLIENT_ID: {Environment.GetEnvironmentVariable("TWITCH_CLIENT_ID")}");
+
+            var app = new Application();
+
+            var mainWindow = new MainWindow();
+
+            app.MainWindow = mainWindow;
+
+            app.Run(mainWindow);
         }
     }
 }
