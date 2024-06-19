@@ -363,7 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Ignore .env file
-# .env
+spotify-controller-project/.env
 
 # Ignore user-specific settings file
 spotify_controller_project/Properties/Settings.settings
