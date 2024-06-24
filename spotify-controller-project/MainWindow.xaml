@@ -15,7 +15,8 @@
                             <Button Content="Pause" Click="PauseButton_Click"/>
                             <Button Content="Next" Click="NextButton_Click"/>
                             <Button Content="Previous" Click="PreviousButton_Click"/>
-                            <Slider x:Name="VolumeSlider" Minimum="0" Maximum="100" ValueChanged="VolumeSlider_ValueChanged"/>
+                            <Slider x:Name="PlaybackSlider" Minimum="0" Maximum="100" ValueChanged="PlaybackSlider_ValueChanged"/>
+                            <Label x:Name="CurrentSongLabel" Content="Currently Playing: " FontSize="16"/>
                         </StackPanel>
                     </Grid>
                 </TabItem>
