@@ -4,9 +4,12 @@ This is a C# application designed to control Spotify playback locally based on c
 
 ## Features
 
-- Play, pause, and control Spotify playback.
-- Search and play songs using chat commands.
-- Integration with Twitch and/or YouTube chat.
+- Play, pause, and control Spotify playback
+- Search and play songs using chat commands
+- Integration with Twitch and/or YouTube chat
+- Display stream info (viewer count, stream health)
+- Implement chat functionality
+- Display redeems list
 
 ## Getting Started
 
@@ -15,26 +18,35 @@ This is a C# application designed to control Spotify playback locally based on c
 - .NET SDK
 - Visual Studio (optional)
 - NHttp Package
+- Spotify API credentials (client id and client secret)
 
 ### Installation
 
-1. Clone the repository:
+Clone the repository:
 
-   ```
-   git clone https://github.com/your-username/spotify-control-app.git
-   ```
+```bash
+git clone https://github.com/your-username/spotify-control-app.git
+```
 
-2. Build the project:
+Build the project:
 
-   ```
-   dotnet build
-   ```
+```bash
+dotnet build
+```
 
-3. Run the application:
+Run the application:
 
-   ```
-   dotnet run
-   ```
+```bash
+dotnet run
+```
+
+### Configuration
+
+Create a `` file with your Spotify API credentials:
+
+```
+<to be completed>
+```
 
 ## Usage
 
@@ -46,16 +58,12 @@ This is a C# application designed to control Spotify playback locally based on c
 
 If you'd like to contribute to this project, please follow the Contribution Guidelines.
 
-## License
-
-This project is not liscensed. Just give credit to people and companies below.
-
 ## Acknowledgments
 
 - Visual Studio 2022
-- [HonestDanGames](https://www.youtube.com/watch?v=Ufgq6_QhVKw)
 
 ## Contact
 
-- GitHub
-- LinkedIn
+- GitHub: [markdicks](https://github.com/markdicks)
+- LinkedIn: [Mark Dicks](https://za.linkedin.com/in/mark-dicks-a84793256?)
+- Email: [markdicks](mailto:markdicks03@gmail.com)
