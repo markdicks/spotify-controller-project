@@ -29,11 +29,15 @@
 		</None>
 	</ItemGroup>
 
-	<!-- Include the .env file and set it to copy to the output directory -->
 	<ItemGroup>
 		<None Update=".env">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+	</ItemGroup>
+
+	<!-- Add the UWP Windows SDK contract reference -->
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.Windows.SDK.Contracts" />
 	</ItemGroup>
 
 </Project>

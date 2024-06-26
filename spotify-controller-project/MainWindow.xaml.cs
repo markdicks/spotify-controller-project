@@ -1,92 +1,94 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Configuration;
+﻿using System;
+using System.Windows;
+using Windows.Media.Control;
+using System.Threading.Tasks;
 
 namespace spotify_controller_project
 {
     public partial class MainWindow : Window
     {
-        private bool isLoggedIn = false;
-        private string accessToken;
+        private GlobalSystemMediaTransportControlsSessionManager _mediaManager;
 
         public MainWindow()
         {
             InitializeComponent();
-            LoadToken();
-            UpdateLoginButton();
+            InitializeMediaManager();
         }
 
-        private void LoadToken()
+        private async void InitializeMediaManager()
         {
-            accessToken = Properties.Settings.Default.AccessToken;
-            if (!string.IsNullOrEmpty(accessToken))
+            try
             {
-                isLoggedIn = true;
+                _mediaManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                _mediaManager.CurrentSessionChanged += MediaManager_CurrentSessionChanged;
+                UpdateCurrentSong();
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    CurrentSongTextBlock.Text = $"Error: {ex.Message}";
+                });
             }
         }
 
-        private void SaveToken(string token)
+        private void MediaManager_CurrentSessionChanged(GlobalSystemMediaTransportControlsSessionManager sender, CurrentSessionChangedEventArgs args)
         {
-            Properties.Settings.Default.AccessToken = token;
-            Properties.Settings.Default.Save();
+            UpdateCurrentSong();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void UpdateCurrentSong()
         {
-            if (isLoggedIn)
+            var currentSession = _mediaManager.GetCurrentSession();
+            if (currentSession != null)
             {
-                Logout();
+                var mediaProperties = await currentSession.TryGetMediaPropertiesAsync();
+                Dispatcher.Invoke(() =>
+                {
+                    CurrentSongTextBlock.Text = $"Currently Playing: {mediaProperties.Title} by {mediaProperties.Artist}";
+                });
             }
             else
             {
-                var loginWindow = new LoginWindow();
-                if (loginWindow.ShowDialog() == true)
+                Dispatcher.Invoke(() =>
                 {
-                    accessToken = loginWindow.AccessToken;
-                    isLoggedIn = true;
-                    SaveToken(accessToken);
-                }
+                    CurrentSongTextBlock.Text = "Currently Playing: None";
+                });
             }
-            UpdateLoginButton();
-        }
-
-        private void Logout()
-        {
-            accessToken = string.Empty;
-            isLoggedIn = false;
-            Properties.Settings.Default.AccessToken = string.Empty;
-            Properties.Settings.Default.Save();
-            UpdateLoginButton();
-        }
-
-        private void UpdateLoginButton()
-        {
-            LoginButton.Content = isLoggedIn ? "Logout" : "Login";
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            // Spotify play logic
+            var currentSession = _mediaManager.GetCurrentSession();
+            currentSession?.TryPlayAsync();
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            // Spotify pause logic
+            var currentSession = _mediaManager.GetCurrentSession();
+            currentSession?.TryPauseAsync();
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            // Spotify next track logic
+            var currentSession = _mediaManager.GetCurrentSession();
+            currentSession?.TrySkipNextAsync();
         }
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            // Spotify previous track logic
+            var currentSession = _mediaManager.GetCurrentSession();
+            currentSession?.TrySkipPreviousAsync();
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            // Spotify volume control logic
+            // Volume control logic
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Login functionality is not needed for local media control.");
         }
     }
 }
