@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AttempTrial.Properties
+namespace ControllerApplication.Properties
 {
 
 
