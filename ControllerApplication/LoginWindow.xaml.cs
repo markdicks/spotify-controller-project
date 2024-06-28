@@ -65,9 +65,6 @@ namespace spotify_controller_project
             // Check if AccessToken is set
             if (!string.IsNullOrEmpty(AccessToken))
             {
-                // Store AccessToken in application settings or use it as needed
-                Properties.Settings.Default.AccessToken = AccessToken;
-                Properties.Settings.Default.Save();
                 MessageBox.Show("Login successful! Access token stored.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
