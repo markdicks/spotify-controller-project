@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
-using Windows.Storage.Pickers;
+using Windows.Media.Control;
+
 
 namespace ControllerApplication
 {
@@ -9,7 +10,6 @@ namespace ControllerApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        var picker = new Windows.Storage.Pickers.FileOpenPicker();
 
         private GlobalSystemMediaTransportControlsSessionManager _mediaManager;
 
