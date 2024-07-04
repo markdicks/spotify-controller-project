@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Windows;
+using System.Threading.Tasks;
 using Windows.Media.Control;
-
+using NAudio.CoreAudioApi;
 
 namespace ControllerApplication
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-
         private GlobalSystemMediaTransportControlsSessionManager _mediaManager;
+        private bool _continueUpdating = true;
+        private MMDevice _audioDevice;
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeMediaManager();
+            InitializeAudioDevice();
+            StartBackgroundMediaUpdateTask();
         }
 
         private async void InitializeMediaManager()
@@ -34,6 +35,13 @@ namespace ControllerApplication
                     CurrentSongTextBlock.Text = $"Error: {ex.Message}";
                 });
             }
+        }
+
+        private void InitializeAudioDevice()
+        {
+            var deviceEnumerator = new MMDeviceEnumerator();
+            _audioDevice = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            VolumeSlider.Value = _audioDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
         }
 
         private void MediaManager_CurrentSessionChanged(GlobalSystemMediaTransportControlsSessionManager sender, CurrentSessionChangedEventArgs args)
@@ -59,6 +67,18 @@ namespace ControllerApplication
                     CurrentSongTextBlock.Text = "Currently Playing: None";
                 });
             }
+        }
+
+        private void StartBackgroundMediaUpdateTask()
+        {
+            Task.Run(async () =>
+            {
+                while (_continueUpdating)
+                {
+                    UpdateCurrentSong();
+                    await Task.Delay(1000); // Update every second
+                }
+            });
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -87,7 +107,16 @@ namespace ControllerApplication
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            // Volume control logic implementation
+            if (_audioDevice != null)
+            {
+                _audioDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(e.NewValue / 100.0);
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _continueUpdating = false;
+            base.OnClosed(e);
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
