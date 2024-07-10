@@ -3,6 +3,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using Windows.Media.Control;
 using NAudio.CoreAudioApi;
+using spotify_controller_project;
 
 namespace ControllerApplication
 {
@@ -121,7 +122,19 @@ namespace ControllerApplication
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Login functionality is not needed for local media control.");
+            // Instantiate the LoginWindow and show it as a dialog
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
+
+            // After the LoginWindow is closed, check the AccessToken
+            if (!string.IsNullOrEmpty(loginWindow.AccessToken))
+            {
+                MessageBox.Show("Login successful!");
+            }
+            else
+            {
+                MessageBox.Show("Login failed or was cancelled.");
+            }
         }
     }
 }
