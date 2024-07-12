@@ -3,7 +3,6 @@ using System.Windows;
 using System.Threading.Tasks;
 using Windows.Media.Control;
 using NAudio.CoreAudioApi;
-using spotify_controller_project;
 
 namespace ControllerApplication
 {

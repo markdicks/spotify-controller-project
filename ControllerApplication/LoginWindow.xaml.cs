@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 
-namespace spotify_controller_project
+namespace ControllerApplication
 {
     public partial class LoginWindow : Window
     {
@@ -23,13 +24,26 @@ namespace spotify_controller_project
 
         private void OpenTwitchLoginPage()
         {
-            // Retrieve Twitch API credentials from configuration or environment variables
-            string twitchRedirectUri = Environment.GetEnvironmentVariable("TWITCH_REDIRECT_URI");
-            string twitchClientId = Environment.GetEnvironmentVariable("TWITCH_CLIENT_ID");
+            string twitchRedirectUri = Properties.Settings.Default.TwitchRedirectUri;
+            string twitchClientId = Properties.Settings.Default.TwitchClientId;
+
+            if (string.IsNullOrEmpty(twitchRedirectUri))
+            {
+                twitchRedirectUri = Interaction.InputBox("Enter Twitch Redirect URI:", "Input Required", "http://localhost");
+                Properties.Settings.Default.TwitchRedirectUri = twitchRedirectUri;
+                Properties.Settings.Default.Save(); // Save the setting
+            }
+
+            if (string.IsNullOrEmpty(twitchClientId))
+            {
+                twitchClientId = Interaction.InputBox("Enter Twitch Client ID:", "Input Required", "");
+                Properties.Settings.Default.TwitchClientId = twitchClientId;
+                Properties.Settings.Default.Save(); // Save the setting
+            }
 
             if (string.IsNullOrEmpty(twitchRedirectUri) || string.IsNullOrEmpty(twitchClientId))
             {
-                MessageBox.Show("Please ensure you have filled in the environment variables to use this feature.", "Missing Environment Variables", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Twitch Redirect URI and Client ID are required to proceed.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
