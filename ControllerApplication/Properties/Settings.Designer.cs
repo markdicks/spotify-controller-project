@@ -46,5 +46,17 @@ namespace ControllerApplication.Properties {
                 this["TwitchClientId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TwitchAccessToken {
+            get {
+                return ((string)(this["TwitchAccessToken"]));
+            }
+            set {
+                this["TwitchAccessToken"] = value;
+            }
+        }
     }
 }
