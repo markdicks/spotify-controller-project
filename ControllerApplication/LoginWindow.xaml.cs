@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Navigation;
 
 namespace ControllerApplication
 {
@@ -14,10 +13,48 @@ namespace ControllerApplication
         {
             InitializeComponent();
 
+            // Check if TwitchRedirectUri and TwitchClientId are set
+            if (string.IsNullOrEmpty(Properties.Settings.Default.TwitchRedirectUri) ||
+                string.IsNullOrEmpty(Properties.Settings.Default.TwitchClientId))
+            {
+                PromptForTwitchSettings();
+            }
+
             // Initialize the HTTP listener
             string redirectUri = Properties.Settings.Default.TwitchRedirectUri;
             _callbackListener = new TwitchCallbackListener(redirectUri, OnAccessTokenReceived);
             _callbackListener.Start();
+        }
+
+        private void PromptForTwitchSettings()
+        {
+            // Prompt the user for the missing information
+            string twitchRedirectUri = PromptUserForInput("Enter the Twitch Redirect URI:");
+            string twitchClientId = PromptUserForInput("Enter the Twitch Client ID:");
+
+            if (string.IsNullOrEmpty(twitchRedirectUri) || string.IsNullOrEmpty(twitchClientId))
+            {
+                MessageBox.Show("Both Twitch Redirect URI and Client ID are required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close(); // Close the window if the user doesn't provide the necessary information
+            }
+            else
+            {
+                // Save the values to settings
+                Properties.Settings.Default.TwitchRedirectUri = twitchRedirectUri;
+                Properties.Settings.Default.TwitchClientId = twitchClientId;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private string PromptUserForInput(string message)
+        {
+            // Simple input dialog implementation (could be replaced with a custom input dialog)
+            InputDialog inputDialog = new InputDialog(message);
+            if (inputDialog.ShowDialog() == true)
+            {
+                return inputDialog.Input;
+            }
+            return null;
         }
 
         private void LoginWithTwitch_Default_Click(object sender, RoutedEventArgs e)
@@ -32,7 +69,7 @@ namespace ControllerApplication
 
         private void OpenTwitchLoginPage(string browserType)
         {
-            string twitchRedirectUri = Properties.Settings.Default.TwitchRedirectUri; // Ensure this is 'http://localhost:3000/'
+            string twitchRedirectUri = Properties.Settings.Default.TwitchRedirectUri;
             string twitchClientId = Properties.Settings.Default.TwitchClientId;
 
             if (string.IsNullOrEmpty(twitchRedirectUri) || string.IsNullOrEmpty(twitchClientId))
@@ -55,15 +92,11 @@ namespace ControllerApplication
 
             if (browserType == "private")
             {
-                // Modify to launch the browser in incognito mode, if supported
                 startInfo.Arguments = "--incognito"; // For Chrome
-                                                     // For Firefox or other browsers, use their specific arguments if needed
-                                                     // startInfo.Arguments = "-private-window"; // For Firefox
             }
 
             Process.Start(startInfo);
         }
-
 
         private void OnAccessTokenReceived(string accessToken)
         {
